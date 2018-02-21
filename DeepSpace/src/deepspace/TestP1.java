@@ -7,9 +7,9 @@ package deepspace;
 
 /**
  *
- * @author dcabezas
+ * @author patricia
  */
-public class TesttP1 {
+public class TestP1 {
 
     /**
      * @param args the command line arguments
