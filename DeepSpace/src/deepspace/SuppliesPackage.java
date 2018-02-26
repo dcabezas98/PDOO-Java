@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package deepspace;
 
 /**
  *
- * @author dcabezas
+ * @author David Cabezas Berrido
+ * @author Patricia Córdoba Hidalgo
  */
 public class SuppliesPackage {
     
-    float ammoPower;
-    float fuelUnits;
-    float shieldPower;
+    private float ammoPower;
+    private float fuelUnits;
+    private float shieldPower;
     
     SuppliesPackage(float amm, float fue, float shi){
         ammoPower=amm;
@@ -21,10 +17,10 @@ public class SuppliesPackage {
         shieldPower=shi;
     }
 
-    SuppliesPackage(SuppliesPackage original){
-        ammoPower=original.ammoPower;
-        fuelUnits=original.fuelUnits;
-        shieldPower=original.shielPower;
+    SuppliesPackage(SuppliesPackage s){
+        ammoPower=s.ammoPower;
+        fuelUnits=s.fuelUnits;
+        shieldPower=s.shieldPower;
     }
     public float getAmmoPower() {
         return ammoPower;
@@ -34,7 +30,7 @@ public class SuppliesPackage {
         return fuelUnits;
     }
 
-    public float getShielPower() {
-        return shielPower;
+    public float getShieldPower() {
+        return shieldPower;
     }
 }

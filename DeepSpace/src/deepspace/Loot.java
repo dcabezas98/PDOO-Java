@@ -1,21 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package deepspace;
 
 /**
  *
- * @author dcabezas
+ * @author David Cabezas Berrido
+ * @author Patricia Córdoba Hidalgo
  */
 public class Loot {
 
-    int nSupplies;
-    int nWeapons;
-    int nShields;
-    int nHangars;
-    int nMedals;
+    private int nSupplies;
+    private int nWeapons;
+    private int nShields;
+    private int nHangars;
+    private int nMedals;
     
     Loot(int sup, int wea, int shi, int han, int med){
         nSupplies=sup;
@@ -44,5 +40,4 @@ public class Loot {
     public int getNMedals() {
         return nMedals;
     }
-    
 }
