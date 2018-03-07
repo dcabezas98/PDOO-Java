@@ -33,4 +33,8 @@ public class SuppliesPackage {
     public float getShieldPower() {
         return shieldPower;
     }
+    
+    public String toString(){
+        return "ammoPower = " + ammoPower + "\nfuelUnits = " + fuelUnits + "\nshieldPower = " + shieldPower;
+    }
 }

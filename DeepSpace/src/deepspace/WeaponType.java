@@ -14,7 +14,6 @@ public enum WeaponType {
     private float power;
     
     WeaponType(float pow){
-        
         power = pow;
     }
     

@@ -22,7 +22,11 @@ public class ShieldBooster {
         boost=s.boost;
         uses=s.uses;
     }
-
+    
+    ShieldToUI getUIversion(){
+        throw new UnsupportedOperationException();
+    }
+            
     public float getBoost() {
         return boost;
     }
@@ -39,5 +43,9 @@ public class ShieldBooster {
         }else{
             return 1.0f;
         }
+    }
+        
+    public String toString(){
+        return "Name = "+ name + "\nBoost = " + boost + "\nUses = " + uses;
     }
 }

@@ -51,7 +51,7 @@ public class TestP1 {
         System.out.println(shieldCopy.useIt());
         System.out.println(shieldCopy.useIt());
         System.out.println(shieldCopy.useIt());
-       
+        
         System.out.println("\nSuppliesPackage: ");
         System.out.println("Ammo: ");
         System.out.println(supp.getAmmoPower());
@@ -171,5 +171,8 @@ public class TestP1 {
         System.out.println(moves);
         System.out.print("No: ");
         System.out.println(doesnotmove);
+        
+        System.out.println(laser.toString());
+        System.out.println(shieldTable.toString());
     }
 }

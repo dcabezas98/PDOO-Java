@@ -17,10 +17,14 @@ public class Weapon {
         uses = use;
     }
     
-    Weapon(Weapon w){
+    Weapon(Weapon w){ 
         name = w.name;
         type = w.type;
         uses = w.uses;
+    }
+    
+    WeaponToUI getUIversion(){
+        throw new UnsupportedOperationException();
     }
 
     public WeaponType getType() {
@@ -44,4 +48,8 @@ public class Weapon {
         else
             return 1.0f; 
     }    
+    
+    public String toString(){
+        return "Name = " + name + "\nType = " + type + "\nPower = " + type.getPower() + "\nUses = " + uses;
+    }
 }

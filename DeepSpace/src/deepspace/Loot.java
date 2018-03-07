@@ -21,6 +21,10 @@ public class Loot {
         nMedals=med;
     }
     
+    LootToUI getUIversion(){
+        
+    }
+    
     public int getNSupplies() {
         return nSupplies;
     }
@@ -39,5 +43,9 @@ public class Loot {
 
     public int getNMedals() {
         return nMedals;
+    }
+    
+    public String toString(){
+        return "nSupplies = " + nSupplies + "\nnWeapons = " + nWeapons + "\nnShields = " + nShields + "\nnHangars = " + nHangars + "\nnMedals = " + nMedals;
     }
 }

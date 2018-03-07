@@ -81,4 +81,8 @@ public class Dice {
             return false;
         }
     }
+        
+    public String toString(){
+        return "NHANGARSPROB = " + NHANGARSPROB + "\nNSHIELDSPROB = " + NSHIELDSPROB + "\nNWEAPONSPROB = " + NWEAPONSPROB + "\nFIRSTSHOTPROB = " + FIRSTSHOTPROB;
+    }
 }
