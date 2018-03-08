@@ -6,10 +6,13 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
+
+import java.util.ArrayList;
+
 public class SpaceStation {
     
-    private final int MAXFUEL = 100; //ES ABSTRACTO
-    private final double SHIELDLOSSPERUNITSHOT=0.1; //ES ABSTRACTO
+    private static final int MAXFUEL = 100; 
+    private static final double SHIELDLOSSPERUNITSHOT=0.1; 
     
     private float ammoPower;
     private float fuelUnits;
@@ -17,12 +20,19 @@ public class SpaceStation {
     private int nMedals;
     private float shieldPower;
     
+    private ArrayList<Weapon> weapons;
+    private ArrayList<ShieldBooster> shieldBoosters;
+    private Hangar hangar;   
+    private Damage pendingDamage;
+    
     private void assignFuelValue(float f){
-        fuelUnits = f;
+        if(f<MAXFUEL)
+            fuelUnits = f;
     }
     
     private void cleanPendingDamage(){
-        throw new UnsupportedOperationException();
+        if(pendingDamage.hasNoEffect())
+            pendingDamage=null;
     }
     
     SpaceStation(String n, SuppliesPackage supplies){
@@ -30,15 +40,25 @@ public class SpaceStation {
         ammoPower = supplies.getAmmoPower();
         fuelUnits = supplies.getFuelUnits();
         shieldPower = supplies.getShieldPower();
-        //nMedals=0;
+        nMedals=0;
+        weapons = new ArrayList<>();
+        shieldBoosters = new ArrayList<>();
     }
     
     public void cleanUpMountedItems(){
-        throw new UnsupportedOperationException();
+        for(int i=0; i<weapons.size(); i++){
+            if(weapons.get(i).getUses()<=0)
+                weapons.remove(i);
+        }
+        
+        for(int i=0; i<shieldBoosters.size(); i++){
+            if(shieldBoosters.get(i).getUses()<=0)
+                shieldBoosters.remove(i);
+        }
     }
     
     public void discardHangar(){
-        throw new UnsupportedOperationException();
+        hangar=null;
     }
     
     public void discardShieldBooster(int i){
@@ -46,7 +66,8 @@ public class SpaceStation {
     }
     
     public void discardShieldBoosterInHangar(int i){
-        throw new UnsupportedOperationException();
+        if(hangar!=null)
+            hangar.removeShieldBooster(i);
     }
     
     public void discardWeapon (int i){
@@ -54,7 +75,8 @@ public class SpaceStation {
     }
     
     public void discardWeaponInHangar(int i){
-        throw new UnsupportedOperationException();
+        if(hangar!=null)
+            hangar.removeWeapon(i);
     }
     
     public float fire(){
@@ -73,7 +95,7 @@ public class SpaceStation {
         return name;
     }
 
-    public int getnMedals() {
+    public int getNMedals() {
         return nMedals;
     }
 
@@ -82,39 +104,47 @@ public class SpaceStation {
     }
     
     public Hangar getHangar(){
-        throw new UnsupportedOperationException();
+        return hangar;
     }
     
     public Damage getPendingDamage(){
-        throw new UnsupportedOperationException();
+        return pendingDamage;
     }
     
-    public ShieldBooster[] getShieldBoosters(){
-        throw new UnsupportedOperationException();
+    public ArrayList<ShieldBooster> getShieldBoosters(){
+        return shieldBoosters;
     }
     
     public float getSpeed(){
-        throw new UnsupportedOperationException();
+        return (fuelUnits/MAXFUEL);
     }
     
-    public SpaceStationToUI getUIveersion(){
-        throw new UnsupportedOperationException();
+    SpaceStationToUI getUIversion(){
+        return new SpaceStationToUI(this);
     }
     
-    public Weapon[] getWeapons(){
-        throw new UnsupportedOperationException();
+    public ArrayList<Weapon> getWeapons(){
+        return weapons;
     }
     
     public void mountShieldBooster(int i){
-        throw new UnsupportedOperationException();
+        if(hangar != null){
+            ShieldBooster s = hangar.removeShieldBooster(i);
+            if(s!=null)
+                shieldBoosters.add(s);
+        }
     }
     
     public void mountWeapon(int i){
-        throw new UnsupportedOperationException();
+        if(hangar != null){
+            Weapon w = hangar.removeWeapon(i);
+            if(w!=null)
+                weapons.add(w);
+        }
     }
     
     public void move(){
-        throw new UnsupportedOperationException();
+        fuelUnits -= getSpeed();
     }
     
     public float protection(){
@@ -122,11 +152,14 @@ public class SpaceStation {
     }
     
     public void recieveHangar(Hangar h){
-        throw new UnsupportedOperationException();
+        if(hangar==null)
+            hangar = h;
     }
     
     public boolean recieveShieldBooster(ShieldBooster s){
-        throw new UnsupportedOperationException();
+        if(hangar!=null)
+            return hangar.addShieldBooster(s);
+        return false;
     }
     
     public ShotResult receiveShot(float shot){
@@ -134,11 +167,15 @@ public class SpaceStation {
     }
     
     public void receiveSupplies(SuppliesPackage s){
-        throw new UnsupportedOperationException();
+        ammoPower += s.getAmmoPower();
+        fuelUnits += s.getFuelUnits();
+        shieldPower += s.getShieldPower();
     }
     
     public boolean receiveWeapon(Weapon w){
-        throw new UnsupportedOperationException();
+        if(hangar!=null)
+            return hangar.addWeapon(w);
+        return false;
     }
     
     public void setLoot(Loot loot){
@@ -146,11 +183,14 @@ public class SpaceStation {
     }
     
     public void setPendingDamage(Damage d){
-        throw new UnsupportedOperationException();
+        pendingDamage= d.adjust(weapons, shieldBoosters);
     }
     
     public boolean validState(){
-        throw new UnsupportedOperationException();
+        cleanPendingDamage();
+        if(pendingDamage == null)
+            return true;
+        return false;
     }
     
     public String toString(){

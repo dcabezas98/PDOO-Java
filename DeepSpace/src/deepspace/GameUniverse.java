@@ -48,7 +48,7 @@ public class GameUniverse {
         throw new UnsupportedOperationException();
     }
     
-    public GameUniverseToUi getUIversion(){
+    public GameUniverseToUI getUIversion(){
         throw new UnsupportedOperationException();
     }
     

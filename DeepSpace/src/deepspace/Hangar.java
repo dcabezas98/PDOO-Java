@@ -5,55 +5,79 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
+
+import java.util.ArrayList;
+        
 public class Hangar {
     
     private int maxElements;
+    private  ArrayList<Weapon> weapons;
+    private  ArrayList<ShieldBooster> shieldBoosters;
     
     private boolean spaceAvailable(){
-        throw new UnsupportedOperationException();
+        return (weapons.size() + shieldBoosters.size()) < maxElements;
     }
     
     Hangar(int capacity){
-        throw new UnsupportedOperationException();
+        maxElements = capacity;
+        weapons = new ArrayList<>();
+        shieldBoosters  = new ArrayList<>();
     }
     
     Hangar(Hangar h){
-        throw new UnsupportedOperationException();
+        maxElements = h.maxElements;
+       weapons = (ArrayList<Weapon>) (h.weapons.clone());
+       shieldBoosters = (ArrayList<ShieldBooster>) (h.shieldBoosters.clone());
     }
     
     HangarToUI getUIversion(){
-        throw new UnsupportedOperationException();
+        return new HangarToUI(this);
     }
     
     public boolean addWeapon(Weapon w){
-        throw new UnsupportedOperationException();
+        if(spaceAvailable()){
+            weapons.add(w);
+            return true;
+        }
+        return false;
     }
     
     public boolean addShieldBooster(ShieldBooster s){
-        throw new UnsupportedOperationException();
+        if(spaceAvailable()){
+            shieldBoosters.add(s);
+            return true;
+        }
+        return false;
     }
     
     public int getMaxElements(){
         return maxElements;
     }
     
-    public ShieldBooster[] getShieldBoosters(){
-        throw new UnsupportedOperationException();
+    public ArrayList<ShieldBooster> getShieldBoosters(){
+        return shieldBoosters;
     }
     
-    public Weapon[] getWeapons(){
-        throw new UnsupportedOperationException();
+    public ArrayList<Weapon> getWeapons(){
+        return weapons;
     }
     
     public ShieldBooster removeShieldBooster(int s){
-        throw new UnsupportedOperationException();
+        if(0 <= s && s < shieldBoosters.size())
+            return shieldBoosters.remove(s);
+        
+        return null;
     }
     
     public Weapon removeWeapon(int w){
-        throw new UnsupportedOperationException();
+        if(0 <= w && w < weapons.size())
+            return weapons.remove(w);
+        
+        return null;
     }
     
-    public String toString(){
-        return "MaxElements: " + maxElements;
+    @Override
+    public String toString() {
+        return "maxElements=" + maxElements + "\nweapons=" + weapons + "\nshieldBoosters=" + shieldBoosters;
     }
 }

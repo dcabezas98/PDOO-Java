@@ -22,7 +22,7 @@ public class Loot {
     }
     
     LootToUI getUIversion(){
-        
+        return new LootToUI(this);
     }
     
     public int getNSupplies() {

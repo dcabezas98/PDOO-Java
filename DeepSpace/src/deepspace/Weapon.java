@@ -24,7 +24,7 @@ public class Weapon {
     }
     
     WeaponToUI getUIversion(){
-        throw new UnsupportedOperationException();
+        return new WeaponToUI(this);
     }
 
     public WeaponType getType() {

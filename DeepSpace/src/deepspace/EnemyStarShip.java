@@ -10,23 +10,27 @@ public class EnemyStarShip {
     private float ammoPower;
     private String name;
     private float shieldPower;
+    private Loot loot;
+    private Damage damage;
     
     EnemyStarShip(String n, float a, float s, Loot l, Damage d){
-        throw new UnsupportedOperationException();
+        name = n;
+        ammoPower = a;
+        shieldPower = s;
+        loot = l;
+        damage = d;
     }
     
     EnemyStarShip(EnemyStarShip e){
-        ammoPower = e.ammoPower;
-        name = e.name;
-        shieldPower = e.shieldPower;
+        this(e.name, e.ammoPower, e.shieldPower, e.loot, e.damage);
     }
     
     EnemyToUI getUIversion(){
-        throw new UnsupportedOperationException();
+        return new EnemyToUI(this);
     }
     
     public float fire(){
-        throw new UnsupportedOperationException();
+        return ammoPower;
     }
 
     public float getAmmoPower() {
@@ -50,14 +54,18 @@ public class EnemyStarShip {
     }
     
     public float protection(){
-        throw new UnsupportedOperationException();
+        return shieldPower;
     }
     
     public ShotResult recieveShot(float shot){
-        throw new UnsupportedOperationException();
+        if(shieldPower < shot)
+            return ShotResult.DONOTRESIST;
+        
+        else return ShotResult.RESIST;
     }
     
     public String toString(){
-        return "Name: " + name + "\nAmmoPower: " + ammoPower + "\nShieldPower: " + shieldPower;
+        return "Name: " + name + "\nAmmoPower: " + ammoPower + "\nShieldPower: "
+               + shieldPower + "\nLoot:\n" + loot.toString() + "\nDamage:\n" + damage.toString();
     }
 }

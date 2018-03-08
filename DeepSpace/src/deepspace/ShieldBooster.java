@@ -24,7 +24,7 @@ public class ShieldBooster {
     }
     
     ShieldToUI getUIversion(){
-        throw new UnsupportedOperationException();
+        return new ShieldToUI(this);
     }
             
     public float getBoost() {
