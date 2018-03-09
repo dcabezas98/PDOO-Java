@@ -36,14 +36,15 @@ public class Damage {
         return new DamageToUI(this);
     } 
     
-    //privada¿?
-    public Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
+    private Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
         Damage aux = new Damage(this);
-        
+        /*
         for(WeaponType t: weapons){
             if(arrayContainsType(w, t)==-1)
                 aux.weapons.remove(t);
-        }
+        }*/
+        
+        aux.weapons.removeIf(t -> arrayContainsType(w,t) == -1);
         
         if(s.size()<nShields)
             aux.nShields=s.size();

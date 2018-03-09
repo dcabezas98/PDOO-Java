@@ -161,6 +161,7 @@ public class TestP1 {
         for(int t: players){
             System.out.println(t);
         }
+        System.out.println(players);
         System.out.println("FirstShot: ");
         System.out.print("Station: ");
         System.out.println(station);

@@ -18,7 +18,7 @@ public class Weapon {
     }
     
     Weapon(Weapon w){ 
-        name = w.name;
+        name = w.name; // ¿?
         type = w.type;
         uses = w.uses;
     }

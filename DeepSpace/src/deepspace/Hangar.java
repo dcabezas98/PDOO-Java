@@ -25,9 +25,11 @@ public class Hangar {
     }
     
     Hangar(Hangar h){
-        maxElements = h.maxElements;
-       weapons = (ArrayList<Weapon>) (h.weapons.clone());
-       shieldBoosters = (ArrayList<ShieldBooster>) (h.shieldBoosters.clone());
+       maxElements = h.maxElements;
+       weapons = new ArrayList<>();
+       for(Weapon w: h.weapons) weapons.add(new Weapon(w));
+       shieldBoosters = new ArrayList<>();
+       for(ShieldBooster s: h.shieldBoosters) shieldBoosters.add(new ShieldBooster(s));
     }
     
     HangarToUI getUIversion(){

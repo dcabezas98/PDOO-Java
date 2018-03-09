@@ -5,15 +5,24 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
+
+import java.util.ArrayList;
+        
 public class GameUniverse {
     
-    private final int WIN = 10;
+    private static final int WIN = 10;
     
     private int currentStationIndex;
     private int turns;
+    private Dice dice;
+    private GameStateController gameState;
+    private SpaceStation currentStation;
+    private ArrayList<SpaceStation> spaceStations;
     
     GameUniverse(){
-        throw new UnsupportedOperationException();
+        gameState = new GameStateController();
+        turns = 0;
+        dice = new Dice();
     }
     
     CombatResult combat(SpaceStation station, EnemyStarShip enemy){
@@ -25,35 +34,45 @@ public class GameUniverse {
     }
     
     public void discardHangar(){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.discardHangar();
+        }
     }
     
     public void discardShieldBooster(int i){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.discardShieldBooster(i);
+        }
     }
     
     public void discardShieldBoosterInHangar(int i){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.discardShieldBoosterInHangar(i);
+        }
     }
     
     public void discardWeapon(int i){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.discardWeapon(i);
+        }
     }
     
     public void discardWeaponInHangar(int i){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.discardWeaponInHangar(i);
+        }
     }
-    
-    public GameState getState(){
-        throw new UnsupportedOperationException();
+
+    public GameState getState() {
+        return gameState.getState();
     }
-    
+        
     public GameUniverseToUI getUIversion(){
         throw new UnsupportedOperationException();
     }
     
     public boolean haveAWinner(){
-        throw new UnsupportedOperationException();
+        return currentStation.getNMedals() >= WIN;
     }
     
     public void init(String[] names){
@@ -61,18 +80,24 @@ public class GameUniverse {
     }
     
     public void mountShieldBooster(int i){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.mountShieldBooster(i);
+        }
     }
     
     public void mountWeapon(int i){
-        throw new UnsupportedOperationException();
+        if(gameState.getState() == GameState.INIT || gameState.getState() == GameState.AFTERCOMBAT){
+            currentStation.mountWeapon(i);
+        }
     }
     
     public boolean nextTurn(){
         throw new UnsupportedOperationException();
     }
-    
-    public String toString(){
-        return "Index: " + currentStationIndex + "\nTurns: " + turns;
+
+    @Override
+    public String toString() {
+        return "GameUniverse{" + "currentStationIndex=" + currentStationIndex + ", turns=" + turns + ", dice=" + dice + ", gameState=" + gameState + ", currentStation=" + currentStation + ", spaceStations=" + spaceStations + '}';
     }
+   
 }

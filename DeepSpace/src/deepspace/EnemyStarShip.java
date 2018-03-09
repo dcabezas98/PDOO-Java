@@ -17,8 +17,8 @@ public class EnemyStarShip {
         name = n;
         ammoPower = a;
         shieldPower = s;
-        loot = l;
-        damage = d;
+        loot = new Loot(l);
+        damage = new Damage(d);
     }
     
     EnemyStarShip(EnemyStarShip e){

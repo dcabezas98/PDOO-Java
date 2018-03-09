@@ -22,7 +22,7 @@ public class SpaceStation {
     
     private ArrayList<Weapon> weapons;
     private ArrayList<ShieldBooster> shieldBoosters;
-    private Hangar hangar;   
+    private Hangar hangar;
     private Damage pendingDamage;
     
     private void assignFuelValue(float f){
@@ -43,6 +43,8 @@ public class SpaceStation {
         nMedals=0;
         weapons = new ArrayList<>();
         shieldBoosters = new ArrayList<>();
+        hangar = null;
+        pendingDamage = null;
     }
     
     public void cleanUpMountedItems(){
@@ -144,7 +146,7 @@ public class SpaceStation {
     }
     
     public void move(){
-        fuelUnits -= getSpeed();
+        fuelUnits -= getSpeed()*fuelUnits;
     }
     
     public float protection(){
@@ -183,7 +185,7 @@ public class SpaceStation {
     }
     
     public void setPendingDamage(Damage d){
-        pendingDamage= d.adjust(weapons, shieldBoosters);
+        pendingDamage= d;
     }
     
     public boolean validState(){
@@ -192,8 +194,9 @@ public class SpaceStation {
             return true;
         return false;
     }
-    
-    public String toString(){
-        return "AmmoPower: " + ammoPower + "\nFuelUnits: " + fuelUnits + "\nName: " + name + "\nMedals: " + nMedals + "\nShieldPower: " + shieldPower;
+
+    @Override
+    public String toString() {
+        return "SpaceStation{" + "ammoPower=" + ammoPower + ", fuelUnits=" + fuelUnits + ", name=" + name + ", nMedals=" + nMedals + ", shieldPower=" + shieldPower + ", weapons=" + weapons + ", shieldBoosters=" + shieldBoosters + ", hangar=" + hangar + ", pendingDamage=" + pendingDamage + '}';
     }
 }

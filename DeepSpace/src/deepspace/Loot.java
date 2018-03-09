@@ -21,6 +21,14 @@ public class Loot {
         nMedals=med;
     }
     
+    Loot(Loot l){
+        nSupplies=l.nSupplies;
+        nWeapons=l.nWeapons;
+        nShields=l.nShields;
+        nHangars=l.nHangars;
+        nMedals=l.nMedals;
+    }
+    
     LootToUI getUIversion(){
         return new LootToUI(this);
     }
