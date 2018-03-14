@@ -48,6 +48,7 @@ public class SpaceStation {
     }
     
     public void cleanUpMountedItems(){
+        /*
         for(int i=0; i<weapons.size(); i++){
             if(weapons.get(i).getUses()<=0)
                 weapons.remove(i);
@@ -57,6 +58,10 @@ public class SpaceStation {
             if(shieldBoosters.get(i).getUses()<=0)
                 shieldBoosters.remove(i);
         }
+        */
+        
+        weapons.removeIf(x-> x.getUses()<=0);
+        shieldBoosters.removeIf(x-> x.getUses()<=0);
     }
     
     public void discardHangar(){
@@ -64,7 +69,15 @@ public class SpaceStation {
     }
     
     public void discardShieldBooster(int i){
-        throw new UnsupportedOperationException();
+        int size=shieldBoosters.size();
+        
+        if(i>=0 && i<size){
+            ShieldBooster sh=shieldBoosters.remove(i);
+            if(pendingDamage!=null){
+                pendingDamage.discardShieldBooster();
+                cleanPendingDamage();
+            }
+        }
     }
     
     public void discardShieldBoosterInHangar(int i){
@@ -73,7 +86,15 @@ public class SpaceStation {
     }
     
     public void discardWeapon (int i){
-        throw new UnsupportedOperationException();
+        int size=weapons.size();
+        
+        if(i>=0 && i<size){
+            Weapon w=weapons.remove(i);
+            if(pendingDamage!=null){
+                pendingDamage.discardWeapon(w);
+                cleanPendingDamage();
+            }
+        }
     }
     
     public void discardWeaponInHangar(int i){
@@ -82,7 +103,13 @@ public class SpaceStation {
     }
     
     public float fire(){
-        throw new UnsupportedOperationException();
+        int size = weapons.size();
+        int factor=1;
+        
+        for(int i=0; i<size; i++)
+            factor*=weapons.get(i).useIt();
+        
+        return factor*ammoPower;
     }
 
     public float getAmmoPower() {
@@ -150,22 +177,37 @@ public class SpaceStation {
     }
     
     public float protection(){
-        throw new UnsupportedOperationException();
+        int factor=1;
+        int size=shieldBoosters.size();
+        
+        for(int i=0; i<size; i++)
+            factor*=shieldBoosters.get(i).useIt();
+        
+        return shieldPower*factor;
     }
     
-    public void recieveHangar(Hangar h){
+    public void receiveHangar(Hangar h){
         if(hangar==null)
             hangar = h;
     }
     
-    public boolean recieveShieldBooster(ShieldBooster s){
+    public boolean receiveShieldBooster(ShieldBooster s){
         if(hangar!=null)
             return hangar.addShieldBooster(s);
         return false;
     }
     
     public ShotResult receiveShot(float shot){
-        throw new UnsupportedOperationException();
+        float myProtection=protection();
+        
+        if(myProtection>=shot){
+            shieldPower-=SHIELDLOSSPERUNITSHOT*shot;
+            shieldPower=Math.max(0.0f,shieldPower);
+            return ShotResult.RESIST;
+        }
+        
+        shieldPower=0.0f;
+        return ShotResult.DONOTRESIST;
     }
     
     public void receiveSupplies(SuppliesPackage s){
@@ -181,7 +223,36 @@ public class SpaceStation {
     }
     
     public void setLoot(Loot loot){
-        throw new UnsupportedOperationException();
+        CardDealer dealer= CardDealer.getInstance();
+        int h = loot.getNHangars();
+        
+        if(h>0){
+            Hangar han=dealer.nextHangar();
+            receiveHangar(han);
+        }
+        
+        int elements = loot.getNSupplies();
+        
+        for(int i=0; i<elements; i++){
+            SuppliesPackage sup= dealer.nextSuppliesPackage();
+            receiveSupplies(sup);
+        }
+        
+        elements=loot.getNWeapons();
+        
+        for(int i=0; i<elements; i++){
+            Weapon weap=dealer.nextWeapon();
+            receiveWeapon(weap);
+        }
+        
+        elements=loot.getNShields();
+        
+        for(int i=0; i<elements; i++){
+            ShieldBooster sh=dealer.nextShieldBooster();
+            receiveShieldBooster(sh);
+        }
+        
+        nMedals+=loot.getNMedals();
     }
     
     public void setPendingDamage(Damage d){

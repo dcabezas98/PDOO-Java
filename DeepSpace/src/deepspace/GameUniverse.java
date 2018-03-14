@@ -17,6 +17,7 @@ public class GameUniverse {
     private Dice dice;
     private GameStateController gameState;
     private SpaceStation currentStation;
+    private EnemyStarShip currentEnemy;
     private ArrayList<SpaceStation> spaceStations;
     
     GameUniverse(){
@@ -26,11 +27,39 @@ public class GameUniverse {
     }
     
     CombatResult combat(SpaceStation station, EnemyStarShip enemy){
-        throw new UnsupportedOperationException();
+        
+        GameCharacter ch = dice.firstShot();
+        boolean enemyWins;
+        float fire;
+        ShotResult result;
+        
+        if(ch == GameCharacter.ENEMYSTARSHIP){
+            fire = enemy.fire();
+            result = station.receiveShot(fire);
+            
+            if(result == ShotResult.RESIST){
+                fire = station.fire();
+                result = enemy.receiveShot(fire);
+                enemyWins = (result == ShotResult.RESIST);
+            }
+            else enemyWins = true;
+        }
+        else{
+            fire = station.fire();
+            result = enemy.receiveShot(fire);
+            enemyWins = (result == ShotResult.RESIST);   
+        }
+        /////////////////////////////////
     }
     
     public CombatResult combat(){
-        throw new UnsupportedOperationException();
+        
+        GameState state = gameState.getState();
+        
+        if((state == GameState.BEFORECOMBAT)||(state == GameState.INIT))
+            return combat(currentStation, currentEnemy);
+        
+        return CombatResult.NOCOMBAT;
     }
     
     public void discardHangar(){
@@ -76,7 +105,38 @@ public class GameUniverse {
     }
     
     public void init(String[] names){
-        throw new UnsupportedOperationException();
+        
+        GameState state = gameState.getState();
+        
+        if(state == GameState.CANNOTPLAY){
+            spaceStations = new ArrayList<>();
+            CardDealer dealer = CardDealer.getInstance();
+            
+            SuppliesPackage supplies;
+            SpaceStation station;
+            Loot loot;
+            int nh, nw, ns;
+            
+            for(String name: names){
+                supplies = dealer.nextSuppliesPackage();
+                station = new SpaceStation(name, supplies);
+                
+                nh = dice.initWithNHangars();
+                nw = dice.initWithNWeapons();
+                ns = dice.initWithNShields();
+                
+                loot = new Loot(0, nw, ns, nh, 0);
+                station.setLoot(loot);
+                
+                spaceStations.add(station);
+            }   
+            
+            currentStationIndex = dice.whoStarts(names.length);
+            currentStation = spaceStations.get(currentStationIndex);
+            currentEnemy = dealer.nextEnemy();
+            
+            gameState.next(turns, spaceStations.size());
+        }   
     }
     
     public void mountShieldBooster(int i){
@@ -92,7 +152,27 @@ public class GameUniverse {
     }
     
     public boolean nextTurn(){
-        throw new UnsupportedOperationException();
+        
+        GameState state = gameState.getState(); 
+        if(state == GameState.AFTERCOMBAT){
+            boolean stationState = currentStation.validState();
+         
+            if(stationState){
+                currentStationIndex=(currentStationIndex+1)%spaceStations.size();
+                turns++;
+                
+                currentStation=spaceStations.get(currentStationIndex);
+                currentStation.cleanUpMountedItems();
+            
+                CardDealer dealer = CardDealer.getInstance();
+                currentEnemy = dealer. nextEnemy();           
+                gameState.next(turns, spaceStations.size());
+                
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     @Override

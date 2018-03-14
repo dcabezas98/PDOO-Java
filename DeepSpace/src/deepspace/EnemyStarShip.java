@@ -57,7 +57,7 @@ public class EnemyStarShip {
         return shieldPower;
     }
     
-    public ShotResult recieveShot(float shot){
+    public ShotResult receiveShot(float shot){
         if(shieldPower < shot)
             return ShotResult.DONOTRESIST;
         
