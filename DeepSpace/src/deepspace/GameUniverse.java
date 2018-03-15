@@ -20,7 +20,7 @@ public class GameUniverse {
     private EnemyStarShip currentEnemy;
     private ArrayList<SpaceStation> spaceStations;
     
-    GameUniverse(){
+    public GameUniverse(){
         gameState = new GameStateController();
         turns = 0;
         dice = new Dice();
@@ -28,12 +28,12 @@ public class GameUniverse {
     
     CombatResult combat(SpaceStation station, EnemyStarShip enemy){
         
-        GameCharacter ch = dice.firstShot();
         boolean enemyWins;
         float fire;
         ShotResult result;
+        CombatResult combatResult;
         
-        if(ch == GameCharacter.ENEMYSTARSHIP){
+        if(dice.firstShot() == GameCharacter.ENEMYSTARSHIP){
             fire = enemy.fire();
             result = station.receiveShot(fire);
             
@@ -49,7 +49,20 @@ public class GameUniverse {
             result = enemy.receiveShot(fire);
             enemyWins = (result == ShotResult.RESIST);   
         }
-        /////////////////////////////////
+        
+        if(enemyWins){
+            if(!dice.spaceStationMoves(station.getSpeed())){
+                station.setPendingDamage(enemy.getDamage());
+                combatResult = CombatResult.ENEMYWINS;
+            } else {
+                station.move();
+                combatResult = CombatResult.STATIONESCAPES;
+            }
+        }else{
+            station.setLoot(enemy.getLoot());
+            combatResult = CombatResult.STATIONWINS;
+        }
+        return combatResult;
     }
     
     public CombatResult combat(){
@@ -97,14 +110,14 @@ public class GameUniverse {
     }
         
     public GameUniverseToUI getUIversion(){
-        throw new UnsupportedOperationException();
+        return new GameUniverseToUI(currentStation, currentEnemy);
     }
     
     public boolean haveAWinner(){
         return currentStation.getNMedals() >= WIN;
     }
     
-    public void init(String[] names){
+    public void init(ArrayList<String> names){
         
         GameState state = gameState.getState();
         
@@ -131,7 +144,7 @@ public class GameUniverse {
                 spaceStations.add(station);
             }   
             
-            currentStationIndex = dice.whoStarts(names.length);
+            currentStationIndex = dice.whoStarts(names.size());
             currentStation = spaceStations.get(currentStationIndex);
             currentEnemy = dealer.nextEnemy();
             

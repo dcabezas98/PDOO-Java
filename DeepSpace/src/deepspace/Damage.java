@@ -36,7 +36,8 @@ public class Damage {
         return new DamageToUI(this);
     } 
     
-    private Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
+    //private Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
+    Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){    
         Damage aux = new Damage(this);
         /*
         for(WeaponType t: weapons){

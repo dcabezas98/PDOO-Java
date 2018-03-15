@@ -46,11 +46,11 @@ public class EnemyStarShip {
     }
     
     public Damage getDamage(){
-        throw new UnsupportedOperationException();
+        return damage;
     }
     
     public Loot getLoot(){
-        throw new UnsupportedOperationException();
+        return loot;
     }
     
     public float protection(){
