@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public enum ShotResult {
+enum ShotResult {
     
     DONOTRESIST, RESIST
 }

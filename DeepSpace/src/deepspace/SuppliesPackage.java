@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class SuppliesPackage {
+class SuppliesPackage {
     
     private float ammoPower;
     private float fuelUnits;

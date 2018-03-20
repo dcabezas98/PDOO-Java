@@ -87,6 +87,7 @@ class CardDealer {
     }
     private void createWeapons() {
        weapons.add(new Weapon("Láser infinito",WeaponType.LASER,100));
+       weapons.add(new Weapon("Láser de la muerte",WeaponType.LASER,20));
        weapons.add(new Weapon("Láser ACME",WeaponType.LASER,1));
        weapons.add(new Weapon("Láser ACME",WeaponType.LASER,1));
        weapons.add(new Weapon("Láser ACME",WeaponType.LASER,1));
@@ -99,6 +100,7 @@ class CardDealer {
        weapons.add(new Weapon("Láser Mejorado",WeaponType.LASER,4));
        
        weapons.add(new Weapon("Misiles del apocalipsis",WeaponType.MISSILE,100));
+       weapons.add(new Weapon("Misil destructor",WeaponType.MISSILE,20));
        weapons.add(new Weapon("Misil ACME",WeaponType.MISSILE,1));
        weapons.add(new Weapon("Misil ACME",WeaponType.MISSILE,1));
        weapons.add(new Weapon("Misil ACME",WeaponType.MISSILE,1));

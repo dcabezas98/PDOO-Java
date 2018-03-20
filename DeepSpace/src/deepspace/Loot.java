@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class Loot {
+class Loot {
 
     private int nSupplies;
     private int nWeapons;

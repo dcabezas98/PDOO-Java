@@ -118,10 +118,8 @@ public class GameUniverse {
     }
     
     public void init(ArrayList<String> names){
-        
-        GameState state = gameState.getState();
-        
-        if(state == GameState.CANNOTPLAY){
+                
+        if(gameState.getState() == GameState.CANNOTPLAY){
             spaceStations = new ArrayList<>();
             CardDealer dealer = CardDealer.getInstance();
             
@@ -178,7 +176,7 @@ public class GameUniverse {
                 currentStation.cleanUpMountedItems();
             
                 CardDealer dealer = CardDealer.getInstance();
-                currentEnemy = dealer. nextEnemy();           
+                currentEnemy = dealer.nextEnemy();           
                 gameState.next(turns, spaceStations.size());
                 
                 return true;

@@ -8,7 +8,7 @@ package deepspace;
 
 import java.util.ArrayList;
 
-public class Damage {
+class Damage {
     
     private int nShields;
     private ArrayList<WeaponType> weapons;
@@ -36,16 +36,19 @@ public class Damage {
         return new DamageToUI(this);
     } 
     
-    //private Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
-    Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){    
+    Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
+        ArrayList copy = (ArrayList<Weapon>) (w.clone());
         Damage aux = new Damage(this);
-        /*
-        for(WeaponType t: weapons){
-            if(arrayContainsType(w, t)==-1)
-                aux.weapons.remove(t);
-        }*/
+        int index;
         
-        aux.weapons.removeIf(t -> arrayContainsType(w,t) == -1);
+        for(WeaponType t: weapons){
+            index=arrayContainsType(copy, t);
+            if(index==-1){
+                aux.weapons.remove(t);
+            } else {
+                copy.remove(index);
+            }
+        }
         
         if(s.size()<nShields)
             aux.nShields=s.size();
@@ -63,7 +66,6 @@ public class Damage {
                 index = i;
             }
         }
-        
         return index;
     }
     

@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class ShieldBooster {
+class ShieldBooster {
     
     private String name;
     private float boost;

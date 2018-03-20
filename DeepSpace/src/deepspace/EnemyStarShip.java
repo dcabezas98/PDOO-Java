@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class EnemyStarShip {
+class EnemyStarShip {
     
     private float ammoPower;
     private String name;

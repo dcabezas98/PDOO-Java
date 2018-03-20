@@ -8,7 +8,7 @@ package deepspace;
 
 import java.util.ArrayList;
         
-public class Hangar {
+class Hangar {
     
     private int maxElements;
     private  ArrayList<Weapon> weapons;

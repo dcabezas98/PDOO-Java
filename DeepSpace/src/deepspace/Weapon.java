@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class Weapon {
+class Weapon {
     
     private String name;
     private WeaponType type;

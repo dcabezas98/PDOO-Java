@@ -9,7 +9,7 @@ package deepspace;
 
 import java.util.ArrayList;
 
-public class SpaceStation {
+class SpaceStation {
     
     private static final int MAXFUEL = 100; 
     private static final double SHIELDLOSSPERUNITSHOT=0.1; 
@@ -69,10 +69,9 @@ public class SpaceStation {
     }
     
     public void discardShieldBooster(int i){
-        int size=shieldBoosters.size();
         
-        if(i>=0 && i<size){
-            ShieldBooster sh=shieldBoosters.remove(i);
+        if(i>=0 && i<shieldBoosters.size()){
+            shieldBoosters.remove(i);
             if(pendingDamage!=null){
                 pendingDamage.discardShieldBooster();
                 cleanPendingDamage();
@@ -86,9 +85,8 @@ public class SpaceStation {
     }
     
     public void discardWeapon (int i){
-        int size=weapons.size();
         
-        if(i>=0 && i<size){
+        if(i>=0 && i<weapons.size()){
             Weapon w=weapons.remove(i);
             if(pendingDamage!=null){
                 pendingDamage.discardWeapon(w);
@@ -224,39 +222,24 @@ public class SpaceStation {
     
     public void setLoot(Loot loot){
         CardDealer dealer= CardDealer.getInstance();
-        int h = loot.getNHangars();
         
-        if(h>0){
-            Hangar han=dealer.nextHangar();
-            receiveHangar(han);
-        }
-        
-        int elements = loot.getNSupplies();
-        
-        for(int i=0; i<elements; i++){
-            SuppliesPackage sup= dealer.nextSuppliesPackage();
-            receiveSupplies(sup);
-        }
-        
-        elements=loot.getNWeapons();
-        
-        for(int i=0; i<elements; i++){
-            Weapon weap=dealer.nextWeapon();
-            receiveWeapon(weap);
-        }
-        
-        elements=loot.getNShields();
-        
-        for(int i=0; i<elements; i++){
-            ShieldBooster sh=dealer.nextShieldBooster();
-            receiveShieldBooster(sh);
-        }
+        if(loot.getNHangars()>0)
+            receiveHangar(dealer.nextHangar());
+                
+        for(int i=0; i<loot.getNSupplies(); i++)
+            receiveSupplies(dealer.nextSuppliesPackage());
+                
+        for(int i=0; i<loot.getNWeapons(); i++)
+            receiveWeapon(dealer.nextWeapon());
+                
+        for(int i=0; i<loot.getNShields(); i++)
+            receiveShieldBooster(dealer.nextShieldBooster());
         
         nMedals+=loot.getNMedals();
     }
     
     public void setPendingDamage(Damage d){
-        pendingDamage= d;
+        pendingDamage= d.adjust(weapons, shieldBoosters);
     }
     
     public boolean validState(){

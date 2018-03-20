@@ -7,7 +7,7 @@ import java.util.Random;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class Dice {
+class Dice {
     
     private final float NHANGARSPROB;
     private final float NSHIELDSPROB;
