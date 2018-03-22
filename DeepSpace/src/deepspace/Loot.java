@@ -53,7 +53,8 @@ class Loot {
         return nMedals;
     }
     
-    public String toString(){
-        return "nSupplies = " + nSupplies + "\nnWeapons = " + nWeapons + "\nnShields = " + nShields + "\nnHangars = " + nHangars + "\nnMedals = " + nMedals;
+    @Override
+    public String toString() {
+        return "Loot{" + "nSupplies=" + nSupplies + ", nWeapons=" + nWeapons + ", nShields=" + nShields + ", nHangars=" + nHangars + ", nMedals=" + nMedals + '}';
     }
 }

@@ -14,22 +14,25 @@ class Damage {
     private ArrayList<WeaponType> weapons;
     private int nWeapons;
     
-    Damage(int w, int s){
+    Damage(int w, int s, ArrayList<WeaponType> wl){
         nWeapons=w;
-        nShields= s;
-        weapons = new ArrayList<>();
+        nShields=s;
+        if(wl!=null)
+            weapons=new ArrayList<>(wl);
+        else
+            weapons=null;
+    }
+    
+    Damage(int w, int s){
+        this(w, s, null);
     }
     
     Damage(ArrayList<WeaponType> wl, int s){
-        nShields = s;
-        weapons = (ArrayList<WeaponType>) (wl.clone());
-        nWeapons = weapons.size();
+        this(-1, s, wl);
     }
     
     Damage(Damage d){
-        nShields= d.nShields;
-        nWeapons= d.nWeapons;
-        weapons= (ArrayList<WeaponType>) (d.weapons.clone());
+        this(d.nWeapons, d.nShields, d.weapons);
     }
     
     DamageToUI getUIversion(){
@@ -37,21 +40,27 @@ class Damage {
     } 
     
     Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
-        ArrayList copy = (ArrayList<Weapon>) (w.clone());
-        Damage aux = new Damage(this);
+        ArrayList copy = new ArrayList(w);
+        int nw=nWeapons, ns=nShields;
+        
+        if(nWeapons > w.size())
+           nw=w.size();
+        
+        if(nShields > s.size())
+            ns=s.size();
+        
+        Damage aux = new Damage(nw, ns, weapons);
         int index;
         
-        for(WeaponType t: weapons){
-            index=arrayContainsType(copy, t);
-            if(index==-1){
-                aux.weapons.remove(t);
-            } else {
-                copy.remove(index);
+        if(weapons != null){
+            for(WeaponType t: weapons){
+                index=arrayContainsType(copy, t);
+                if(index==-1)
+                    aux.weapons.remove(t);
+                else 
+                    copy.remove(index);
             }
         }
-        
-        if(s.size()<nShields)
-            aux.nShields=s.size();
         
         return aux;
     }
@@ -70,8 +79,10 @@ class Damage {
     }
     
     public void discardWeapon(Weapon w){
-        if(!weapons.remove(w.getType()) && nWeapons > 0)
+        if(weapons == null && nWeapons > 0)
             nWeapons--;
+        else
+            weapons.remove(w.getType());
     }
     
     public void discardShieldBooster(){
@@ -80,10 +91,7 @@ class Damage {
     }
     
     public boolean hasNoEffect(){
-        if(nWeapons == 0 && nShields == 0)
-            return true;
-        else
-            return false;
+        return nShields <= 0 && nWeapons <= 0 && (weapons == null || weapons.isEmpty());
     }
     
     public int getNShields(){

@@ -81,8 +81,9 @@ class Dice {
             return false;
         }
     }
-        
-    public String toString(){
-        return "NHANGARSPROB = " + NHANGARSPROB + "\nNSHIELDSPROB = " + NSHIELDSPROB + "\nNWEAPONSPROB = " + NWEAPONSPROB + "\nFIRSTSHOTPROB = " + FIRSTSHOTPROB;
+
+    @Override
+    public String toString() {
+        return "Dice{" + "NHANGARSPROB=" + NHANGARSPROB + ", NSHIELDSPROB=" + NSHIELDSPROB + ", NWEAPONSPROB=" + NWEAPONSPROB + ", FIRSTSHOTPROB=" + FIRSTSHOTPROB + ", generator=" + generator + '}';
     }
 }

@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-class EnemyStarShip {
+class EnemyStarShip implements Copyable<EnemyStarShip> {
     
     private float ammoPower;
     private String name;
@@ -64,8 +64,13 @@ class EnemyStarShip {
         else return ShotResult.RESIST;
     }
     
-    public String toString(){
-        return "Name: " + name + "\nAmmoPower: " + ammoPower + "\nShieldPower: "
-               + shieldPower + "\nLoot:\n" + loot.toString() + "\nDamage:\n" + damage.toString();
+    @Override
+    public EnemyStarShip copy(){
+        return new EnemyStarShip(this);
+    }
+
+    @Override
+    public String toString() {
+        return "EnemyStarShip{" + "ammoPower=" + ammoPower + ", name=" + name + ", shieldPower=" + shieldPower + ", loot=" + loot + ", damage=" + damage + '}';
     }
 }

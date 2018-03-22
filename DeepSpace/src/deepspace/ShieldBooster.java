@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-class ShieldBooster {
+class ShieldBooster implements Copyable<ShieldBooster> {
     
     private String name;
     private float boost;
@@ -45,7 +45,13 @@ class ShieldBooster {
         }
     }
         
-    public String toString(){
-        return "Name = "+ name + "\nBoost = " + boost + "\nUses = " + uses;
+    @Override
+    public ShieldBooster copy(){
+        return new ShieldBooster(this);
+    }
+
+    @Override
+    public String toString() {
+        return "ShieldBooster{" + "name=" + name + ", boost=" + boost + ", uses=" + uses + '}';
     }
 }

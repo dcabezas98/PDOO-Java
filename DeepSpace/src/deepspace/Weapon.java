@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-class Weapon {
+class Weapon implements Copyable<Weapon> {
     
     private String name;
     private WeaponType type;
@@ -18,7 +18,7 @@ class Weapon {
     }
     
     Weapon(Weapon w){ 
-        name = w.name; // ¿?
+        name = w.name;
         type = w.type;
         uses = w.uses;
     }
@@ -49,7 +49,13 @@ class Weapon {
             return 1.0f; 
     }    
     
-    public String toString(){
-        return "Name = " + name + "\nType = " + type + "\nPower = " + type.getPower() + "\nUses = " + uses;
+    @Override
+    public Weapon copy(){
+        return new Weapon(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Weapon{" + "name=" + name + ", type=" + type + ", uses=" + uses + '}';
     }
 }

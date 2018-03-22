@@ -62,6 +62,7 @@ public class GameUniverse {
             station.setLoot(enemy.getLoot());
             combatResult = CombatResult.STATIONWINS;
         }
+        gameState.next(turns, spaceStations.size());
         return combatResult;
     }
     

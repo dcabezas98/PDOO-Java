@@ -31,7 +31,7 @@ class SpaceStation {
     }
     
     private void cleanPendingDamage(){
-        if(pendingDamage.hasNoEffect())
+        if(pendingDamage != null && pendingDamage.hasNoEffect())
             pendingDamage=null;
     }
     

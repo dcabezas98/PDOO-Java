@@ -5,7 +5,7 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-class SuppliesPackage {
+class SuppliesPackage implements Copyable<SuppliesPackage> {
     
     private float ammoPower;
     private float fuelUnits;
@@ -34,7 +34,13 @@ class SuppliesPackage {
         return shieldPower;
     }
     
-    public String toString(){
-        return "ammoPower = " + ammoPower + "\nfuelUnits = " + fuelUnits + "\nshieldPower = " + shieldPower;
+    @Override
+    public SuppliesPackage copy(){
+        return new SuppliesPackage(this);
+    }
+
+    @Override
+    public String toString() {
+        return "SuppliesPackage{" + "ammoPower=" + ammoPower + ", fuelUnits=" + fuelUnits + ", shieldPower=" + shieldPower + '}';
     }
 }

@@ -8,7 +8,7 @@ package deepspace;
 
 import java.util.ArrayList;
         
-class Hangar {
+class Hangar implements Copyable<Hangar> {
     
     private int maxElements;
     private  ArrayList<Weapon> weapons;
@@ -27,9 +27,13 @@ class Hangar {
     Hangar(Hangar h){
        maxElements = h.maxElements;
        weapons = new ArrayList<>();
-       for(Weapon w: h.weapons) weapons.add(new Weapon(w));
+       h.weapons.forEach((w) -> {
+           weapons.add(new Weapon(w));
+        });
        shieldBoosters = new ArrayList<>();
-       for(ShieldBooster s: h.shieldBoosters) shieldBoosters.add(new ShieldBooster(s));
+       h.shieldBoosters.forEach((s) -> {
+           shieldBoosters.add(new ShieldBooster(s));
+        });
     }
     
     HangarToUI getUIversion(){
@@ -78,8 +82,13 @@ class Hangar {
         return null;
     }
     
+    @Override 
+    public Hangar copy(){
+        return new Hangar(this);
+    }
+
     @Override
     public String toString() {
-        return "maxElements=" + maxElements + "\nweapons=" + weapons + "\nshieldBoosters=" + shieldBoosters;
+        return "Hangar{" + "maxElements=" + maxElements + ", weapons=" + weapons + ", shieldBoosters=" + shieldBoosters + '}';
     }
 }
