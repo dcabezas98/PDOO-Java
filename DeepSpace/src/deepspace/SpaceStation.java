@@ -48,18 +48,6 @@ class SpaceStation {
     }
     
     public void cleanUpMountedItems(){
-        /*
-        for(int i=0; i<weapons.size(); i++){
-            if(weapons.get(i).getUses()<=0)
-                weapons.remove(i);
-        }
-        
-        for(int i=0; i<shieldBoosters.size(); i++){
-            if(shieldBoosters.get(i).getUses()<=0)
-                shieldBoosters.remove(i);
-        }
-        */
-        
         weapons.removeIf(x-> x.getUses()<=0);
         shieldBoosters.removeIf(x-> x.getUses()<=0);
     }
