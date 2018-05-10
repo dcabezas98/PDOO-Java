@@ -19,11 +19,13 @@ public class GameUniverse {
     private SpaceStation currentStation;
     private EnemyStarShip currentEnemy;
     private ArrayList<SpaceStation> spaceStations;
+    private boolean haveSpaceCity;
     
     public GameUniverse(){
         gameState = new GameStateController();
         turns = 0;
         dice = new Dice();
+        haveSpaceCity=false;
     }
     
     CombatResult combat(SpaceStation station, EnemyStarShip enemy){
@@ -59,11 +61,41 @@ public class GameUniverse {
                 combatResult = CombatResult.STATIONESCAPES;
             }
         }else{
-            station.setLoot(enemy.getLoot());
-            combatResult = CombatResult.STATIONWINS;
+            Transformation trans = station.setLoot(enemy.getLoot());
+            combatResult = CombatResult.STATIONWINSANDCONVERTS;
+            if(trans == Transformation.GETEFFICIENT)
+                makeStationEfficient();
+            else if (trans == Transformation.SPACECITY)
+                createSpaceCity();
+            else
+                combatResult = CombatResult.STATIONWINS;
         }
+        
         gameState.next(turns, spaceStations.size());
+        
         return combatResult;
+    }
+    
+    private void makeStationEfficient(){
+        if(dice.extraEfficiency())
+            currentStation = new BetaPowerEfficientSpaceStation(currentStation);            
+        else
+            currentStation = new PowerEfficientSpaceStation(currentStation);
+  
+        spaceStations.set(currentStationIndex,currentStation);
+    }
+    
+    private void createSpaceCity(){
+        if(!haveSpaceCity){
+            ArrayList<SpaceStation> rest = new ArrayList();
+            for (SpaceStation t: spaceStations){
+                if(t != currentStation)
+                    rest.add(t);
+            }
+            currentStation= new SpaceCity(currentStation, rest);
+            spaceStations.set(currentStationIndex,currentStation);
+            haveSpaceCity = true;
+        }
     }
     
     public CombatResult combat(){
@@ -186,7 +218,7 @@ public class GameUniverse {
         }
         return false;
     }
-
+    
     @Override
     public String toString() {
         return "GameUniverse{" + "currentStationIndex=" + currentStationIndex + ", turns=" + turns + ", dice=" + dice + ", gameState=" + gameState + ", currentStation=" + currentStation + ", spaceStations=" + spaceStations + '}';

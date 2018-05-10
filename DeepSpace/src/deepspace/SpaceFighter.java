@@ -7,8 +7,11 @@ package deepspace;
 
 /**
  *
- * @author Profesor
+ * @author David Cabezas Berrido
+ * @author Patricia Córdoba Hidalgo
  */
-interface Copyable <T> {
-    public T copy ();
+interface SpaceFighter {
+    public float protection();
+    public float fire();    
+    public ShotResult receiveShot(float shot);
 }

@@ -12,6 +12,8 @@ class Loot {
     private int nShields;
     private int nHangars;
     private int nMedals;
+    private boolean efficient;
+    private boolean spaceCity;
     
     Loot(int sup, int wea, int shi, int han, int med){
         nSupplies=sup;
@@ -19,14 +21,18 @@ class Loot {
         nShields=shi;
         nHangars=han;
         nMedals=med;
+        efficient=false;
+        spaceCity=false;
+    }
+    
+    Loot(int sup, int wea, int shi, int han, int med, boolean ef, boolean city){
+        this(sup,wea,shi,han,med);
+        efficient=ef;
+        spaceCity=city;
     }
     
     Loot(Loot l){
-        nSupplies=l.nSupplies;
-        nWeapons=l.nWeapons;
-        nShields=l.nShields;
-        nHangars=l.nHangars;
-        nMedals=l.nMedals;
+        this(l.nSupplies, l.nWeapons, l.nShields, l.nHangars, l.nMedals, l.efficient, l.spaceCity);
     }
     
     LootToUI getUIversion(){
@@ -53,8 +59,18 @@ class Loot {
         return nMedals;
     }
     
+    public boolean getEfficient(){
+        return efficient;
+    }
+    
+    public boolean getSpaceCity(){
+        return spaceCity;
+    }
+
     @Override
     public String toString() {
-        return "Loot{" + "nSupplies=" + nSupplies + ", nWeapons=" + nWeapons + ", nShields=" + nShields + ", nHangars=" + nHangars + ", nMedals=" + nMedals + '}';
+        return "nSupplies=" + nSupplies + "\nnWeapons=" + nWeapons + "\nnShields=" + nShields + "\nnHangars=" + nHangars + "\nnMedals=" + nMedals + "\nefficient=" + efficient + "\nspaceCity=" + spaceCity;
     }
+    
+    
 }

@@ -9,7 +9,7 @@ package deepspace;
 
 import java.util.ArrayList;
 
-class SpaceStation {
+class SpaceStation implements SpaceFighter {
     
     private static final int MAXFUEL = 100; 
     private static final double SHIELDLOSSPERUNITSHOT=0.1; 
@@ -26,8 +26,11 @@ class SpaceStation {
     private Damage pendingDamage;
     
     private void assignFuelValue(float f){
-        if(f<MAXFUEL)
+        fuelUnits = 0;
+        if(f<=MAXFUEL && f>0)
             fuelUnits = f;
+        else
+            fuelUnits = MAXFUEL; 
     }
     
     private void cleanPendingDamage(){
@@ -38,7 +41,7 @@ class SpaceStation {
     SpaceStation(String n, SuppliesPackage supplies){
         name = n;
         ammoPower = supplies.getAmmoPower();
-        fuelUnits = supplies.getFuelUnits();
+        assignFuelValue(supplies.getFuelUnits());
         shieldPower = supplies.getShieldPower();
         nMedals=0;
         weapons = new ArrayList<>();
@@ -47,7 +50,20 @@ class SpaceStation {
         pendingDamage = null;
     }
     
-    public void cleanUpMountedItems(){
+    SpaceStation(SpaceStation station){
+        this(station.name, new SuppliesPackage(station.ammoPower, station.fuelUnits, station.shieldPower));
+        nMedals = station.nMedals;
+        weapons = new ArrayList(station.weapons);
+        shieldBoosters = new ArrayList(station.shieldBoosters);
+        hangar=null;
+        if (station.hangar != null)
+            hangar = new Hangar(station.hangar);
+        pendingDamage = null;
+        if(station.pendingDamage != null)
+            pendingDamage = station.pendingDamage.copy();
+    }
+    
+    public void cleanUpMountedItems(){        
         weapons.removeIf(x-> x.getUses()<=0);
         shieldBoosters.removeIf(x-> x.getUses()<=0);
     }
@@ -88,6 +104,7 @@ class SpaceStation {
             hangar.removeWeapon(i);
     }
     
+    @Override
     public float fire(){
         int size = weapons.size();
         int factor=1;
@@ -162,6 +179,7 @@ class SpaceStation {
         fuelUnits -= getSpeed()*fuelUnits;
     }
     
+    @Override
     public float protection(){
         int factor=1;
         int size=shieldBoosters.size();
@@ -183,6 +201,7 @@ class SpaceStation {
         return false;
     }
     
+    @Override
     public ShotResult receiveShot(float shot){
         float myProtection=protection();
         
@@ -208,7 +227,7 @@ class SpaceStation {
         return false;
     }
     
-    public void setLoot(Loot loot){
+    public Transformation setLoot(Loot loot){
         CardDealer dealer= CardDealer.getInstance();
         
         if(loot.getNHangars()>0)
@@ -224,6 +243,13 @@ class SpaceStation {
             receiveShieldBooster(dealer.nextShieldBooster());
         
         nMedals+=loot.getNMedals();
+        
+        if(loot.getSpaceCity())
+            return Transformation.SPACECITY;
+        else if(loot.getEfficient())
+            return Transformation.GETEFFICIENT;
+        else
+            return Transformation.NOTRANSFORM;
     }
     
     public void setPendingDamage(Damage d){
@@ -239,6 +265,6 @@ class SpaceStation {
 
     @Override
     public String toString() {
-        return "SpaceStation{" + "ammoPower=" + ammoPower + ", fuelUnits=" + fuelUnits + ", name=" + name + ", nMedals=" + nMedals + ", shieldPower=" + shieldPower + ", weapons=" + weapons + ", shieldBoosters=" + shieldBoosters + ", hangar=" + hangar + ", pendingDamage=" + pendingDamage + '}';
+        return "name=" + name + "\nammoPower=" + ammoPower + "\nshieldPower=" + shieldPower + "\nfuelUnits=" + fuelUnits + "\nnMedals=" + nMedals + "\nweapons=" + weapons + "\nshieldBoosters=" + shieldBoosters + "\nhangar=" + hangar + "\npendingDamage=" + pendingDamage;
     }
 }

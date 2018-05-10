@@ -12,7 +12,7 @@ public class TestP1 {
      */
     public static void main(String[] args) {
         
-        Loot loot = new Loot(3, 2, 3, 1, 2);
+        Loot loot = new Loot(3, 2, 3, 1, 2, false, false);
         ShieldBooster shieldTable = new ShieldBooster("Table", 3.8f, 2);
         ShieldBooster shieldCopy = new ShieldBooster(shieldTable);
         SuppliesPackage supp = new SuppliesPackage(2.3f, 7.1f, 3.1f);

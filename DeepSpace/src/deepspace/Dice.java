@@ -13,6 +13,7 @@ class Dice {
     private final float NSHIELDSPROB;
     private final float NWEAPONSPROB;
     private final float FIRSTSHOTPROB;
+    private final float EXTRAEFFICIENCY;
     private Random generator;
     
     Dice(){
@@ -20,6 +21,7 @@ class Dice {
         NSHIELDSPROB = 0.25f;
         NWEAPONSPROB = 0.33f;
         FIRSTSHOTPROB = 0.5f;
+        EXTRAEFFICIENCY= 0.8f;
         generator = new Random();
     }
     
@@ -75,15 +77,17 @@ class Dice {
     boolean spaceStationMoves(float speed){
         float x = generator.nextFloat();
         
-        if(x<speed){
-            return true;
-        } else {
-            return false;
-        }
+        return x<speed;
     }
-
+    
+    boolean extraEfficiency(){
+        float x = generator.nextFloat();
+        
+        return x < EXTRAEFFICIENCY;    
+    }
+        
     @Override
-    public String toString() {
-        return "Dice{" + "NHANGARSPROB=" + NHANGARSPROB + ", NSHIELDSPROB=" + NSHIELDSPROB + ", NWEAPONSPROB=" + NWEAPONSPROB + ", FIRSTSHOTPROB=" + FIRSTSHOTPROB + ", generator=" + generator + '}';
+    public String toString(){
+        return "NHANGARSPROB = " + NHANGARSPROB + "\nNSHIELDSPROB = " + NSHIELDSPROB + "\nNWEAPONSPROB = " + NWEAPONSPROB + "\nFIRSTSHOTPROB = " + FIRSTSHOTPROB +"\nEXTRAEFFICIENCY" + EXTRAEFFICIENCY;
     }
 }

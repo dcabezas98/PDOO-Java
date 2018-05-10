@@ -8,113 +8,44 @@ package deepspace;
 
 import java.util.ArrayList;
 
-class Damage {
+abstract class Damage {
     
     private int nShields;
-    private ArrayList<WeaponType> weapons;
-    private int nWeapons;
     
-    Damage(int w, int s, ArrayList<WeaponType> wl){
-        nWeapons=w;
-        nShields=s;
-        if(wl!=null)
-            weapons=new ArrayList<>(wl);
-        else
-            weapons=null;
+    Damage(int s){
+        nShields = s;
     }
     
-    Damage(int w, int s){
-        this(w, s, null);
-    }
+    abstract Damage copy();
     
-    Damage(ArrayList<WeaponType> wl, int s){
-        this(-1, s, wl);
-    }
+    abstract DamageToUI getUIversion();
     
-    Damage(Damage d){
-        this(d.nWeapons, d.nShields, d.weapons);
-    }
+    abstract void discardWeapon(Weapon w);
     
-    DamageToUI getUIversion(){
-        return new DamageToUI(this);
-    } 
-    
-    Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s){
-        ArrayList copy = new ArrayList(w);
-        int nw=nWeapons, ns=nShields;
-        
-        if(nWeapons > w.size())
-           nw=w.size();
-        
+    int adjustShields(ArrayList<ShieldBooster> s){        
         if(nShields > s.size())
-            ns=s.size();
-        
-        Damage aux = new Damage(nw, ns, weapons);
-        int index;
-        
-        if(weapons != null){
-            for(WeaponType t: weapons){
-                index=arrayContainsType(copy, t);
-                if(index==-1)
-                    aux.weapons.remove(t);
-                else 
-                    copy.remove(index);
-            }
-        }
-        
-        return aux;
+            return s.size();
+        return nShields;
     }
     
-    private int arrayContainsType(ArrayList<Weapon> w, WeaponType t){
-        boolean found = false;
-        int index = -1;
+    abstract Damage adjust(ArrayList<Weapon> w, ArrayList<ShieldBooster> s);
         
-        for(int i= 0; i<w.size() && !found; i++){
-            if(w.get(i).getType() == t){
-                found = true;
-                index = i;
-            }
-        }
-        return index;
-    }
-    
-    public void discardWeapon(Weapon w){
-        if(weapons == null && nWeapons > 0)
-            nWeapons--;
-        else
-            weapons.remove(w.getType());
-    }
-    
     public void discardShieldBooster(){
         if(nShields > 0)
             nShields--;
     }
     
     public boolean hasNoEffect(){
-        return nShields <= 0 && nWeapons <= 0 && (weapons == null || weapons.isEmpty());
+        return nShields <= 0;
     }
     
     public int getNShields(){
         return nShields;
-    }
-    
-    public int getNWeapons(){
-        return nWeapons;
-    }
-    
-    public ArrayList<WeaponType> getWeapons(){
-        return weapons;
-    }
-    
+    }   
+
     @Override
-    public String toString(){
-        return "Shields: " + nShields + "\nWeapons: " + nWeapons + "\nweapons: " + weapons;
+    public String toString() {
+        return "nShields = " + nShields;
     }
+    
 }
-
-
-
-
-
-
-
