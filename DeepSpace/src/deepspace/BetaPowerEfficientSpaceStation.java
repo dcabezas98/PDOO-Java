@@ -10,7 +10,6 @@ package deepspace;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-
 public class BetaPowerEfficientSpaceStation extends PowerEfficientSpaceStation{
     private static final float EXTRAEFFICIENCY=1.2f;
     private Dice dice;
