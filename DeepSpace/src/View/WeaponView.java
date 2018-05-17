@@ -3,20 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.GUI;
+package View;
 import deepspace.WeaponToUI;
 import deepspace.WeaponType;
+
 /**
  *
- * @author patricia
+ * @author David Cabezas Berrido
+ * @author Patricia Córdoba Hidalgo
  */
-public class WeaponView extends javax.swing.JPanel {
 
+public class WeaponView extends javax.swing.JPanel implements CombatElementView {
+
+    private boolean selected = false;
+    
     /**
      * Creates new form WeaponView
      */
     public WeaponView() {
         initComponents();
+        
+        setOpaque(selected);
+    }
+    
+    @Override
+    public boolean isSelected () {
+        return selected;
     }
     
     void setWeapon(WeaponToUI w){
@@ -41,10 +53,14 @@ public class WeaponView extends javax.swing.JPanel {
         lType = new javax.swing.JLabel();
         lPower = new javax.swing.JLabel();
         lUses = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Weapon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Tipo:");
 
@@ -57,8 +73,6 @@ public class WeaponView extends javax.swing.JPanel {
         lPower.setText("jLabel5");
 
         lUses.setText("jLabel6");
-
-        jLabel4.setText("WEAPON");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -77,20 +91,14 @@ public class WeaponView extends javax.swing.JPanel {
                         .addComponent(lType))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lPower)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lType))
@@ -106,12 +114,18 @@ public class WeaponView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        selected = !selected;
+        setOpaque (selected);
+        repaint();
+    }//GEN-LAST:event_formMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lPower;
     private javax.swing.JLabel lType;
     private javax.swing.JLabel lUses;

@@ -7,13 +7,15 @@ package deepspace;
  */
 public enum WeaponType {
     
-    LASER(2.0f),
-    MISSILE(3.0f),
-    PLASMA(4.0f);
+    LASER("Laser",2.0f),
+    MISSILE("Missile",3.0f),
+    PLASMA("Plasma",4.0f);
     
     private float power;
+    private String name;
     
-    WeaponType(float pow){
+    WeaponType(String nam, float pow){
+        name = nam;
         power = pow;
     }
     
@@ -23,21 +25,7 @@ public enum WeaponType {
     
     @Override
     public String toString() {
-        String res;
-        switch (this) {
-            case LASER:
-                res = "Laser"; 
-                break;
-            case MISSILE:
-                res = "Missile"; 
-                break;
-            case PLASMA:
-                res = "Plasma";
-                break;
-            default:
-                res = "Error";
-                break;
-        }
-        return res;
+        return name;
     }
+    
 }

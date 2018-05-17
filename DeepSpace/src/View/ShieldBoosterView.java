@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.GUI;
+package View;
 import deepspace.ShieldToUI;
 
 /**
@@ -11,13 +11,21 @@ import deepspace.ShieldToUI;
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-public class ShieldBoosterView extends javax.swing.JPanel {
+public class ShieldBoosterView extends javax.swing.JPanel implements CombatElementView {
 
+    private boolean selected = false;
+    
     /**
      * Creates new form ShieldBoosterView
      */
     public ShieldBoosterView() {
         initComponents();
+        setOpaque (selected);
+    }
+    
+    @Override
+    public boolean isSelected () {
+        return selected;
     }
     
     void setShieldBooster(ShieldToUI s){
@@ -39,9 +47,13 @@ public class ShieldBoosterView extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         lPower = new javax.swing.JLabel();
         lUses = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ShieldBooster", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Potencia:");
 
@@ -50,8 +62,6 @@ public class ShieldBoosterView extends javax.swing.JPanel {
         lPower.setText("jLabel3");
 
         lUses.setText("jLabel4");
-
-        jLabel5.setText("SHIELD BOOSTER");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -69,17 +79,11 @@ public class ShieldBoosterView extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lPower)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lPower))
@@ -91,11 +95,17 @@ public class ShieldBoosterView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        selected = !selected;
+        setOpaque (selected);
+        repaint();
+    }//GEN-LAST:event_formMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lPower;
     private javax.swing.JLabel lUses;
     // End of variables declaration//GEN-END:variables
