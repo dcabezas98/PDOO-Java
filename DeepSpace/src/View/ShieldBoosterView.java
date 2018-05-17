@@ -48,6 +48,7 @@ public class ShieldBoosterView extends javax.swing.JPanel implements CombatEleme
         lPower = new javax.swing.JLabel();
         lUses = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(150, 150, 242));
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ShieldBooster", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

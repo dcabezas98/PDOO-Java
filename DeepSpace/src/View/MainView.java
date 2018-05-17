@@ -7,6 +7,7 @@ package View;
 import controller.Controller;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import deepspace.CombatResult;
 
 /**
  *
@@ -68,6 +69,31 @@ public class MainView extends javax.swing.JFrame {
     public boolean confirmExitMessage() {
         return (JOptionPane.showConfirmDialog(this, "¿Estás segur@ que deseas salir?", getAppName(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
     }
+    
+//    public void showResultMessage(CombatResult cr){
+//        
+//        switch (cr) {
+//              case ENEMYWINS :
+//                JOptionPane.showMessageDialog (vistaPrincipal,“Has PERDIDO el combate.\nCumple tu castigo.”,“Deep Space 1.0”,JoptionPane.INFORMATION_MESSAGE)
+//                pause ("\n Has PERDIDO el combate. Cumple tu castigo. ");
+//                break;
+//              case STATIONESCAPES :
+//                pause ("\n Has logrado escapar. Eres una Gallina Espacial.");
+//                break;
+//              case STATIONWINS :
+//                pause ("\n Has GANADO el combate. Disfruta de tu botín.");
+//                if (controller.haveAWinner()) {
+//                    pause ("\n\n **** **** ****  HAS GANADO LA PARTIDA  **** **** ****\n");
+//                    System.exit (0);
+//                }
+//                break;
+//              case STATIONWINSANDCONVERTS :
+//                pause("\n Has GANADO el combate y tu estación se ha transformado.");
+//                if (controller.haveAWinner()) {
+//                    pause ("\n\n **** **** ****  HAS GANADO LA PARTIDA  **** **** ****\n");
+//                    System.exit (0);
+//                }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -149,7 +175,7 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bCombatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCombatActionPerformed
-        // TODO add your handling code here:
+        controller.combat();
     }//GEN-LAST:event_bCombatActionPerformed
 
     private void bExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExitActionPerformed

@@ -75,6 +75,12 @@ public class TextUI {
                     System.exit (0);
                 }
                 break;
+              case STATIONWINSANDCONVERTS :
+                pause("\n Has GANADO el combate y tu estación se ha transformado.");
+                if (controller.haveAWinner()) {
+                    pause ("\n\n **** **** ****  HAS GANADO LA PARTIDA  **** **** ****\n");
+                    System.exit (0);
+                }
           }
           do {   // Until a valid next turn
               System.out.println (showStation (gameUI.getCurrentStation()));

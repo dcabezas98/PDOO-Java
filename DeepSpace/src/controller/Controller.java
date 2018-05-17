@@ -59,7 +59,50 @@ public class Controller {
         return gameUniverse.getState();
     }
     
-    //
+    public void discardItemsInHangar(ArrayList<Integer> selectedItems){
+        int w = gameUniverse.getUIversion().getCurrentStation().getHangar().getWeapons().size();
+        int pos;
+        
+        for(int i = selectedItems.size()-1; i>=0; i--){
+            pos = selectedItems.get(i);
+            if(pos < w)
+                gameUniverse.discardWeaponInHangar(pos);
+            else   
+                gameUniverse.discardShieldBoosterInHangar(pos-w);
+        }
+        
+        view.updateView();
+    }
     
+    public void discardWeapons(ArrayList<Integer> selectedWeapons){
+        
+        for(int i = 0; i < selectedWeapons.size(); i++)
+            gameUniverse.discardWeapon(selectedWeapons.get(i));
+        
+        view.updateView();
+    }
     
+    public void discardShieldBoosters(ArrayList<Integer> selectedShields){
+        
+        for(int i = 0; i < selectedShields.size(); i++)
+            gameUniverse.discardShieldBooster(selectedShields.get(i));
+        
+        view.updateView();
+    }
+    
+    public void mountItems(ArrayList<Integer> selectedItems){
+        
+        int w = gameUniverse.getUIversion().getCurrentStation().getHangar().getWeapons().size();
+        int pos;
+        
+        for(int i = selectedItems.size()-1; i >= 0; i--){
+            pos = selectedItems.get(i);
+            if(pos < w)
+                gameUniverse.mountWeapon(pos);
+            else   
+                gameUniverse.mountShieldBooster(pos-w);
+        } 
+        
+        view.updateView();
+    }
 }

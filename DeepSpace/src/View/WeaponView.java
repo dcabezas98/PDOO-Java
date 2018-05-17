@@ -5,7 +5,6 @@
  */
 package View;
 import deepspace.WeaponToUI;
-import deepspace.WeaponType;
 
 /**
  *
@@ -54,6 +53,7 @@ public class WeaponView extends javax.swing.JPanel implements CombatElementView 
         lPower = new javax.swing.JLabel();
         lUses = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(242, 150, 150));
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Weapon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         addMouseListener(new java.awt.event.MouseAdapter() {

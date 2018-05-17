@@ -112,9 +112,6 @@ public class ControllerText {
               model.discardShieldBooster(option);
               break;
         }
-        view.updateView();
-        
+        view.updateView();   
     }
-
-    
 }
