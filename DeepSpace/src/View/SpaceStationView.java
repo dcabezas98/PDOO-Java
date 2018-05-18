@@ -10,6 +10,7 @@ import deepspace.WeaponToUI;
 import deepspace.ShieldToUI;
 import java.util.ArrayList;
 import java.awt.Component;
+import deepspace.GameState;
 
 /**
  *
@@ -41,6 +42,17 @@ public class SpaceStationView extends javax.swing.JPanel {
         lnMedals.setText(Integer.toString(st.getnMedals()));
         lName.setText(st.getName());
         
+        GameState state = MainView.controller.getState();
+        
+        bDiscardHangar.setEnabled(false);
+        bDiscard.setEnabled(false);
+        bMount.setEnabled(false);
+        if((state == GameState.AFTERCOMBAT)||(state == GameState.INIT)){
+            bDiscardHangar.setEnabled(true);
+            bDiscard.setEnabled(true);
+            bMount.setEnabled(true);
+        }
+        
         if(st.getHangar() == null){
             hangarView.setVisible(false);
             lNoHangar.setVisible(true);
@@ -51,8 +63,10 @@ public class SpaceStationView extends javax.swing.JPanel {
         }
         
         if(st.getPendingDamage() == null){
+            lNoPDamage.setVisible(true);
             damageView.setVisible(false);
         } else{
+            lNoPDamage.setVisible(false);
             damageView.setDamage(st.getPendingDamage());
             damageView.setVisible(true);
         }
@@ -135,6 +149,7 @@ public class SpaceStationView extends javax.swing.JPanel {
         pHangar = new javax.swing.JPanel();
         lNoHangar = new javax.swing.JLabel();
         pDamage = new javax.swing.JPanel();
+        lNoPDamage = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -161,6 +176,11 @@ public class SpaceStationView extends javax.swing.JPanel {
         });
 
         bDiscardHangar.setText("Descartar Hangar Completo");
+        bDiscardHangar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDiscardHangarActionPerformed(evt);
+            }
+        });
 
         bMount.setText("Equipar");
         bMount.addActionListener(new java.awt.event.ActionListener() {
@@ -195,13 +215,17 @@ public class SpaceStationView extends javax.swing.JPanel {
         scrollShields.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         scrollShields.setViewportView(pShields);
 
-        pHangar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pHangar.setBorder(null);
 
         lNoHangar.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         lNoHangar.setText("¡No tienes hangar!");
         pHangar.add(lNoHangar);
 
         pDamage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lNoPDamage.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        lNoPDamage.setText("¡No tienes daño pendiente!");
+        pDamage.add(lNoPDamage);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -293,7 +317,12 @@ public class SpaceStationView extends javax.swing.JPanel {
         MainView.controller.discardItemsInHangar(hangarView.getSelectedItems());
         MainView.controller.discardShieldBoosters(getSelectedShields());
         MainView.controller.discardWeapons(getSelectedWeapons());
+        MainView.controller.updateView();
     }//GEN-LAST:event_bDiscardActionPerformed
+
+    private void bDiscardHangarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDiscardHangarActionPerformed
+        MainView.controller.discardHangar();
+    }//GEN-LAST:event_bDiscardHangarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -311,6 +340,7 @@ public class SpaceStationView extends javax.swing.JPanel {
     private javax.swing.JLabel lFuelUnits;
     private javax.swing.JLabel lName;
     private javax.swing.JLabel lNoHangar;
+    private javax.swing.JLabel lNoPDamage;
     private javax.swing.JLabel lShieldPower;
     private javax.swing.JLabel lnMedals;
     private javax.swing.JPanel pDamage;

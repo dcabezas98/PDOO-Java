@@ -11,6 +11,7 @@ import deepspace.GameUniverse;
 import deepspace.GameUniverseToUI;
 import deepspace.CombatResult;
 import deepspace.GameState;
+import deepspace.HangarToUI;
 
 /**
  *
@@ -45,12 +46,16 @@ public class Controller {
     
     public boolean nextTurn() {
         boolean result = gameUniverse.nextTurn();
-        view.updateView();
+        if(!result)
+            view.showNextTurnMessage();
+        else
+            view.updateView();
         return result;
     }
     
     public CombatResult combat() {
         CombatResult result = gameUniverse.combat();
+        view.showResultMessage(result);
         view.updateView();
         return result;
     }
@@ -59,34 +64,44 @@ public class Controller {
         return gameUniverse.getState();
     }
     
-    public void discardItemsInHangar(ArrayList<Integer> selectedItems){
-        int w = gameUniverse.getUIversion().getCurrentStation().getHangar().getWeapons().size();
-        int pos;
-        
-        for(int i = selectedItems.size()-1; i>=0; i--){
-            pos = selectedItems.get(i);
-            if(pos < w)
-                gameUniverse.discardWeaponInHangar(pos);
-            else   
-                gameUniverse.discardShieldBoosterInHangar(pos-w);
-        }
-        
+    public void updateView(){
         view.updateView();
+    }
+    
+    public boolean haveAWinner() {
+        return gameUniverse.haveAWinner();
+    }
+    
+    public void discardItemsInHangar(ArrayList<Integer> selectedItems){
+        HangarToUI h = gameUniverse.getUIversion().getCurrentStation().getHangar();
+        if(h != null){
+            int w = h.getWeapons().size();
+            int pos;
+
+            for(int i = selectedItems.size()-1; i>=0; i--){
+                pos = selectedItems.get(i);
+                if(pos < w)
+                    gameUniverse.discardWeaponInHangar(pos);
+                else   
+                    gameUniverse.discardShieldBoosterInHangar(pos-w);
+            }
+        }
     }
     
     public void discardWeapons(ArrayList<Integer> selectedWeapons){
         
-        for(int i = 0; i < selectedWeapons.size(); i++)
-            gameUniverse.discardWeapon(selectedWeapons.get(i));
-        
-        view.updateView();
+        for(int i = selectedWeapons.size()-1; i>=0; i--)
+            gameUniverse.discardWeapon(selectedWeapons.get(i)); 
     }
     
     public void discardShieldBoosters(ArrayList<Integer> selectedShields){
         
-        for(int i = 0; i < selectedShields.size(); i++)
-            gameUniverse.discardShieldBooster(selectedShields.get(i));
-        
+        for(int i = selectedShields.size()-1; i>=0; i--)
+            gameUniverse.discardShieldBooster(selectedShields.get(i)); 
+    }
+    
+    public void discardHangar() {
+        gameUniverse.discardHangar();
         view.updateView();
     }
     

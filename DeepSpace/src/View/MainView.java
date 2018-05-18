@@ -8,7 +8,7 @@ import controller.Controller;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import deepspace.CombatResult;
-
+import deepspace.GameState;
 /**
  *
  * @author David Cabezas Berrido
@@ -50,8 +50,21 @@ public class MainView extends javax.swing.JFrame {
     }
     
     public void updateView() {
+        GameState state = controller.getState();
+        
+        bCombat.setEnabled(false);
+        bNext.setEnabled(true);
+        if((state == GameState.BEFORECOMBAT)||(state == GameState.INIT)){
+            bCombat.setEnabled(true);
+            bNext.setEnabled(false);
+        }
+        
         spaceStationView.setSpaceStation(controller.getGameUniverseToUI().getCurrentStation());
         enemyView.setEnemy(controller.getGameUniverseToUI().getCurrentEnemy());
+        
+        enemyView.setVisible(false);
+        if(state == GameState.AFTERCOMBAT)
+            enemyView.setVisible(true);
     }
     
     public void showView() {
@@ -70,30 +83,34 @@ public class MainView extends javax.swing.JFrame {
         return (JOptionPane.showConfirmDialog(this, "¿Estás segur@ que deseas salir?", getAppName(), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
     }
     
-//    public void showResultMessage(CombatResult cr){
-//        
-//        switch (cr) {
-//              case ENEMYWINS :
-//                JOptionPane.showMessageDialog (vistaPrincipal,“Has PERDIDO el combate.\nCumple tu castigo.”,“Deep Space 1.0”,JoptionPane.INFORMATION_MESSAGE)
-//                pause ("\n Has PERDIDO el combate. Cumple tu castigo. ");
-//                break;
-//              case STATIONESCAPES :
-//                pause ("\n Has logrado escapar. Eres una Gallina Espacial.");
-//                break;
-//              case STATIONWINS :
-//                pause ("\n Has GANADO el combate. Disfruta de tu botín.");
-//                if (controller.haveAWinner()) {
-//                    pause ("\n\n **** **** ****  HAS GANADO LA PARTIDA  **** **** ****\n");
-//                    System.exit (0);
-//                }
-//                break;
-//              case STATIONWINSANDCONVERTS :
-//                pause("\n Has GANADO el combate y tu estación se ha transformado.");
-//                if (controller.haveAWinner()) {
-//                    pause ("\n\n **** **** ****  HAS GANADO LA PARTIDA  **** **** ****\n");
-//                    System.exit (0);
-//                }
-//    }
+    public void showResultMessage(CombatResult cr){
+        
+        switch (cr) {
+              case ENEMYWINS :
+                JOptionPane.showMessageDialog(this,"Has PERDIDO el combate.\nCumple tu castigo.",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+                break;
+              case STATIONESCAPES :
+                JOptionPane.showMessageDialog(this,"Has logrado escapar. Eres una Gallina Espacial.",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+                break;
+              case STATIONWINS :
+                JOptionPane.showMessageDialog(this,"Has GANADO el combate. Disfruta de tu botín.",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+                if (controller.haveAWinner()) {
+                    JOptionPane.showMessageDialog(this,"HAS GANADO LA PARTIDA",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+                    System.exit (0);
+                }
+                break;
+              case STATIONWINSANDCONVERTS :
+                JOptionPane.showMessageDialog(this,"Has GANADO el combate y tu estación se ha transformado.",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+                if (controller.haveAWinner()) {
+                    JOptionPane.showMessageDialog(this,"HAS GANADO LA PARTIDA",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+                    System.exit (0);
+                }
+        }
+    }
+    
+    public void showNextTurnMessage(){
+        JOptionPane.showMessageDialog(this,"No puedes pasar turno.\nCumple tu castigo.",getAppName(),JOptionPane.INFORMATION_MESSAGE);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -160,7 +177,7 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pEnemy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pEnemy, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(bCombat, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
