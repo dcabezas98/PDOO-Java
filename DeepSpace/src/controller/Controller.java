@@ -5,7 +5,7 @@
  */
 package controller;
 
-import View.MainView;
+import GUI.MainView;
 import java.util.ArrayList;
 import deepspace.GameUniverse;
 import deepspace.GameUniverseToUI;

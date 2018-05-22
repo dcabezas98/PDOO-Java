@@ -3,26 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
-import deepspace.WeaponToUI;
+package GUI;
+import deepspace.ShieldToUI;
 
 /**
  *
  * @author David Cabezas Berrido
  * @author Patricia Córdoba Hidalgo
  */
-
-public class WeaponView extends javax.swing.JPanel implements CombatElementView {
+public class ShieldBoosterView extends javax.swing.JPanel implements CombatElementView {
 
     private boolean selected = false;
     
     /**
-     * Creates new form WeaponView
+     * Creates new form ShieldBoosterView
      */
-    public WeaponView() {
+    public ShieldBoosterView() {
         initComponents();
-        
-        setOpaque(selected);
+        setOpaque (selected);
     }
     
     @Override
@@ -30,10 +28,9 @@ public class WeaponView extends javax.swing.JPanel implements CombatElementView 
         return selected;
     }
     
-    void setWeapon(WeaponToUI w){
-        lType.setText(w.getType().toString());
-        lPower.setText(Float.toString(w.getPower()));
-        lUses.setText(Integer.toString(w.getUses()));
+    void setShieldBooster(ShieldToUI s){
+        lPower.setText(Float.toString(s.getBoost()));
+        lUses.setText(Integer.toString(s.getUses()));
         repaint();
     }
 
@@ -48,31 +45,24 @@ public class WeaponView extends javax.swing.JPanel implements CombatElementView 
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        lType = new javax.swing.JLabel();
         lPower = new javax.swing.JLabel();
         lUses = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(242, 150, 150));
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Weapon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
-        setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        setBackground(new java.awt.Color(150, 150, 242));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ShieldBooster", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
 
-        jLabel1.setText("Tipo:");
+        jLabel1.setText("Potencia:");
 
-        jLabel2.setText("Potencia:");
+        jLabel2.setText("Usos:");
 
-        jLabel3.setText("Usos:");
+        lPower.setText("jLabel3");
 
-        lType.setText("jLabel4");
-
-        lPower.setText("jLabel5");
-
-        lUses.setText("jLabel6");
+        lUses.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -82,15 +72,11 @@ public class WeaponView extends javax.swing.JPanel implements CombatElementView 
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lUses))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lType))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lPower)))
                 .addContainerGap())
@@ -101,14 +87,10 @@ public class WeaponView extends javax.swing.JPanel implements CombatElementView 
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lType))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lPower))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
                     .addComponent(lUses))
                 .addContainerGap())
         );
@@ -125,9 +107,7 @@ public class WeaponView extends javax.swing.JPanel implements CombatElementView 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lPower;
-    private javax.swing.JLabel lType;
     private javax.swing.JLabel lUses;
     // End of variables declaration//GEN-END:variables
 }

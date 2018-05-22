@@ -219,6 +219,8 @@ class SpaceStation implements SpaceFighter {
         ammoPower += s.getAmmoPower();
         fuelUnits += s.getFuelUnits();
         shieldPower += s.getShieldPower();
+        if(fuelUnits > MAXFUEL)
+            fuelUnits = MAXFUEL;
     }
     
     public boolean receiveWeapon(Weapon w){

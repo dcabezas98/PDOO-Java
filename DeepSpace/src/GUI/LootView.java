@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package GUI;
 import deepspace.LootToUI;
 
 /**
@@ -27,6 +27,7 @@ public class LootView extends javax.swing.JPanel {
         lNMedals.setText(Integer.toString(l.getnMedals()));
         lNHangars.setText(Integer.toString(l.getnHangars()));
         
+        lTransform.setVisible(true);
         if(l.isSpaceCity())
             lTransform.setText("Ciudad Espacial");
         else if (l.isGetEfficient())
