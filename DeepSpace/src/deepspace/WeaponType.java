@@ -27,5 +27,4 @@ public enum WeaponType {
     public String toString() {
         return name;
     }
-    
 }

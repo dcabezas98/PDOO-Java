@@ -63,7 +63,7 @@ public class MainView extends javax.swing.JFrame {
         enemyView.setEnemy(controller.getGameUniverseToUI().getCurrentEnemy());
         
         enemyView.setVisible(false);
-        if(state == GameState.AFTERCOMBAT)
+        if(state == GameState.AFTERCOMBAT || controller.isEnemyVisible())
             enemyView.setVisible(true);
     }
     

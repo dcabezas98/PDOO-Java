@@ -25,6 +25,9 @@ class SpaceStation implements SpaceFighter {
     private Hangar hangar;
     private Damage pendingDamage;
     
+    private int spy;
+    private int cheat;
+    
     private void assignFuelValue(float f){
         fuelUnits = 0;
         if(f<=MAXFUEL && f>0)
@@ -48,6 +51,9 @@ class SpaceStation implements SpaceFighter {
         shieldBoosters = new ArrayList<>();
         hangar = null;
         pendingDamage = null;
+        
+        spy = 2;
+        cheat = 1;
     }
     
     SpaceStation(SpaceStation station){
@@ -61,6 +67,35 @@ class SpaceStation implements SpaceFighter {
         pendingDamage = null;
         if(station.pendingDamage != null)
             pendingDamage = station.pendingDamage.copy();
+        
+        spy = station.spy;
+        cheat = station.cheat;
+    }
+    
+    public boolean canSpy(){
+        return spy>0;
+    }
+    
+    public void spyNow(){
+        if(canSpy())
+            spy--;
+    }
+
+    public boolean canCheat(){
+        return cheat>0;
+    }
+    
+    public void cheatNow(){
+        if(canCheat())
+            cheat--;
+    }
+
+    public int getSpy() {
+        return spy;
+    }
+
+    public int getCheat() {
+        return cheat;
     }
     
     public void cleanUpMountedItems(){        

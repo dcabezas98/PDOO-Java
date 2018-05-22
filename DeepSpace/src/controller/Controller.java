@@ -120,4 +120,18 @@ public class Controller {
         
         view.updateView();
     }
+    
+    public void cheatNow(){
+        gameUniverse.cheatNow();
+        view.updateView();
+    }
+    
+    public void spyNow(){
+        gameUniverse.spyNow();
+        view.updateView();
+    }
+    
+    public boolean isEnemyVisible(){
+        return gameUniverse.isEnemyVisible();
+    }
 }

@@ -20,6 +20,28 @@ public class GameUniverse {
     private EnemyStarShip currentEnemy;
     private ArrayList<SpaceStation> spaceStations;
     private boolean haveSpaceCity;
+    private boolean enemyVisible;
+
+    public boolean isEnemyVisible() {
+        return enemyVisible;
+    }
+    
+    public void cheatNow(){
+        if(currentStation.canCheat() && enemyVisible){
+            Loot l = new Loot(2, 2, 3, 1, 0);
+            NumericDamage d = new NumericDamage(0,0);
+            currentEnemy = new EnemyStarShip("Enemigo saboteado", 0, 0, l, d);
+           
+            currentStation.cheatNow();
+        }
+    }
+    
+    public void spyNow(){
+        if(currentStation.canSpy() && currentStation.canCheat()){
+            enemyVisible = true;
+            currentStation.spyNow();
+        }
+    }
     
     public GameUniverse(){
         gameState = new GameStateController();
@@ -179,6 +201,8 @@ public class GameUniverse {
             currentStation = spaceStations.get(currentStationIndex);
             currentEnemy = dealer.nextEnemy();
             
+            enemyVisible = false;
+            
             gameState.next(turns, spaceStations.size());
         }   
     }
@@ -202,6 +226,9 @@ public class GameUniverse {
             boolean stationState = currentStation.validState();
          
             if(stationState){
+                
+                enemyVisible = false;
+                
                 currentStationIndex=(currentStationIndex+1)%spaceStations.size();
                 turns++;
                 

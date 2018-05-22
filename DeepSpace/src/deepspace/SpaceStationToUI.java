@@ -24,6 +24,9 @@ public class SpaceStationToUI {
     private HangarToUI hangar;   
     private DamageToUI pendingDamage;
     
+    private int spy;
+    private int cheat;
+    
     SpaceStationToUI(SpaceStation station) {
         weapons=new ArrayList();
         shieldBoosters=new ArrayList();         
@@ -59,7 +62,17 @@ public class SpaceStationToUI {
         } else {
           pendingDamage = null;
         }
-            
+        
+        spy = station.getSpy();
+        cheat = station.getCheat();            
+    }
+    
+    public boolean canSpy(){
+        return spy>0;
+    }
+
+    public boolean canCheat(){
+        return cheat>0;
     }
 
     public String getName() {
@@ -96,5 +109,9 @@ public class SpaceStationToUI {
     
     public DamageToUI getPendingDamage() {
         return pendingDamage;
+    }
+    
+    public boolean validState(){
+        return pendingDamage == null || pendingDamage.hasNoEffect();
     }
 }

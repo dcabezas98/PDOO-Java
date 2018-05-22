@@ -47,6 +47,14 @@ public class SpaceStationView extends javax.swing.JPanel {
         bDiscardHangar.setEnabled(false);
         bDiscard.setEnabled(false);
         bMount.setEnabled(false);
+        bCheat.setEnabled(false);
+        bSpy.setEnabled(false);
+        
+        if((state == GameState.BEFORECOMBAT)||(state == GameState.INIT)){
+            if(st.canSpy() && st.canCheat()) bSpy.setEnabled(true);
+            if(st.canCheat() && MainView.controller.isEnemyVisible()) bCheat.setEnabled(true);
+        }
+
         if((state == GameState.AFTERCOMBAT)||(state == GameState.INIT)){
             bDiscardHangar.setEnabled(true);
             bDiscard.setEnabled(true);
@@ -62,7 +70,7 @@ public class SpaceStationView extends javax.swing.JPanel {
             hangarView.setVisible(true);
         }
         
-        if(st.getPendingDamage() == null){
+        if(st.validState()){
             lNoPDamage.setVisible(true);
             damageView.setVisible(false);
         } else{
@@ -150,6 +158,8 @@ public class SpaceStationView extends javax.swing.JPanel {
         lNoHangar = new javax.swing.JLabel();
         pDamage = new javax.swing.JPanel();
         lNoPDamage = new javax.swing.JLabel();
+        bSpy = new javax.swing.JButton();
+        bCheat = new javax.swing.JButton();
 
         jLabel3.setText("jLabel3");
 
@@ -227,6 +237,20 @@ public class SpaceStationView extends javax.swing.JPanel {
         lNoPDamage.setText("¡No tienes daño pendiente!");
         pDamage.add(lNoPDamage);
 
+        bSpy.setText("Espiar");
+        bSpy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSpyActionPerformed(evt);
+            }
+        });
+
+        bCheat.setText("Sabotaje");
+        bCheat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCheatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -240,32 +264,34 @@ public class SpaceStationView extends javax.swing.JPanel {
                             .addComponent(scrollWeapons, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(pHangar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(lAmmoPower))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lShieldPower)))
+                                .addGap(77, 77, 77)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(34, 34, 34)
-                                                .addComponent(lAmmoPower))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lShieldPower)))
-                                        .addGap(77, 77, 77)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6))
-                                        .addGap(115, 115, 115)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lnMedals)
-                                            .addComponent(lFuelUnits)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(bMount)
-                                        .addGap(43, 43, 43)
-                                        .addComponent(bDiscard)
-                                        .addGap(41, 41, 41)
-                                        .addComponent(bDiscardHangar)))
-                                .addGap(0, 6, Short.MAX_VALUE))))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(115, 115, 115)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lnMedals)
+                                    .addComponent(lFuelUnits))
+                                .addGap(0, 6, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(bMount)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bDiscard)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bDiscardHangar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bSpy)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bCheat))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(262, 262, 262)
                         .addComponent(lName)
@@ -304,7 +330,9 @@ public class SpaceStationView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bMount)
                     .addComponent(bDiscard)
-                    .addComponent(bDiscardHangar))
+                    .addComponent(bDiscardHangar)
+                    .addComponent(bSpy)
+                    .addComponent(bCheat))
                 .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -324,11 +352,20 @@ public class SpaceStationView extends javax.swing.JPanel {
         MainView.controller.discardHangar();
     }//GEN-LAST:event_bDiscardHangarActionPerformed
 
+    private void bSpyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSpyActionPerformed
+        MainView.controller.spyNow();
+    }//GEN-LAST:event_bSpyActionPerformed
+
+    private void bCheatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCheatActionPerformed
+        MainView.controller.cheatNow();
+    }//GEN-LAST:event_bCheatActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bCheat;
     private javax.swing.JButton bDiscard;
     private javax.swing.JButton bDiscardHangar;
     private javax.swing.JButton bMount;
+    private javax.swing.JButton bSpy;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

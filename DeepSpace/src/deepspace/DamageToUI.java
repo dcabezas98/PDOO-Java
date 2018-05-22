@@ -22,5 +22,7 @@ public abstract class DamageToUI {
     
     public abstract String getWeaponInfo();
     
-    
+    public boolean hasNoEffect(){
+        return nShields <= 0;
+    }
 }

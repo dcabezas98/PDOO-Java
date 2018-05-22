@@ -25,4 +25,9 @@ public class NumericDamageToUI extends DamageToUI{
     public String getWeaponInfo() {
         return ""+nWeapons;
     }
+    
+    @Override
+    public boolean hasNoEffect(){
+        return (nWeapons <= 0 && super.hasNoEffect());
+    }
 }

@@ -32,4 +32,9 @@ public class SpecificDamageToUI extends DamageToUI{
         String aux = weapons.toString();
         return aux.substring(1, aux.length()-1);
     }
+    
+    @Override
+    public boolean hasNoEffect(){
+        return (super.hasNoEffect() && weapons.size() <= 0);
+    }
 }
