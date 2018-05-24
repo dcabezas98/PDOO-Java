@@ -87,7 +87,7 @@ public class GameUniverse {
             combatResult = CombatResult.STATIONWINSANDCONVERTS;
             if(trans == Transformation.GETEFFICIENT)
                 makeStationEfficient();
-            else if (trans == Transformation.SPACECITY)
+            else if (trans == Transformation.SPACECITY && !haveSpaceCity)
                 createSpaceCity();
             else
                 combatResult = CombatResult.STATIONWINS;
